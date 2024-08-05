@@ -25,3 +25,19 @@ int	ft_strcmp(char *str, char *str2)
 	}
 	return (0);
 }
+
+void	free_max(int fd, t_game *game)
+{
+	int	i;
+
+	i = 0;
+	if (fd != -1)
+		close(fd);
+	while (game->map[i])
+	{
+		free((void *)game->map[i]);
+		i++;
+	}
+	free(game->map);
+	free(game);
+}

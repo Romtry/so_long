@@ -12,7 +12,7 @@
 
 #include "../../includes/so_long.h"
 
-void	print_error(int n)
+void	print_error(int n, int fd, t_game *game)
 {
 	if (n == 0)
 		write(1, "no path given\n", 14);
@@ -23,8 +23,14 @@ void	print_error(int n)
 	else if (n == 3)
 		write(1, "file not found", 14);
 	else if (n == 4)
-		write(1, "less or more than 1 exit\n", 25);
+		write(1, "map is not a quadrilateral\n", 27);
 	else if (n == 5)
+		write(1, "wrong walls\n", 12);
+	else if (n == 6)
+		write(1, "less or more than 1 exit\n", 25);
+	else if (n == 7)
 		write(1, "less or more than 1 player\n", 27);
+	if (game != NULL || fd != -1)
+		free_max(fd, game);
 	exit(1);
 }
