@@ -12,25 +12,11 @@
 
 #include "../../includes/so_long.h"
 
-int	height(char *path)
+void	flood_fill(t_game *game)
 {
-	char	*temp;
-	int		fd;
-	int		i;
-
-	i = 0;
-	fd = open(path, O_RDONLY);
-	while (1)
-	{
-		i++;
-		temp = get_next_line(fd);
-		if (temp == NULL)
-			break ;
-		free(temp);
-	}
-	free(temp);
-	close(fd);
-	return (i);
+	map_cpy(game);
+	player_pos(game);
+	algo_ff(game);
 }
 
 char	**check_map(int fd, char *path, t_game *game)

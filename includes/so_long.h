@@ -20,24 +20,38 @@
 
 typedef struct s_game
 {
+	int		px;
+	int		py;
+	int		coin;
 	size_t	height;
 	size_t	width;
 	char	**map;
+	char	**cpy;
 }	t_game;
 
 //so_long.c
 void	printus(char **arr);
 
 //parsing
+//parsing.c
 int		check(int argc, char **argv, t_game *game);
+void	flood_fill(t_game *game);
+
+//print_error.c
 void	print_error(int n, int fd, t_game *game);
 
-//checkmap_utils
+//utils
+//checkmap_utils.c
 void	check_rectangle(t_game *game);
 
-//utils
-void	free_max(int fd, t_game *game);
+//so_long_utils.c
+int		height(char *path);
+void	free_max(int fd, t_game *game, int n);
 int		ft_strcmp(char *str, char *str2);
+
+// flood_fill_utils.c
+void	map_cpy(t_game *game);
+void	player_pos(t_game *game);
 
 //get_next_line
 char	*get_next_line(int fd);

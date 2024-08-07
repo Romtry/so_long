@@ -13,7 +13,7 @@
 NAME=	so_long
 
 SRC= 	src/parsing/parsing.c	src/parsing/print_error.c	src/utils/so_long_utils.c \
-		src/so_long.c			src/parsing/checkmap_utils.c	 \
+		src/so_long.c			src/utils/checkmap_utils.c	src/utils/flood_fill_utils.c \
 		src/utils/gnl/get_next_line_utils.c			src/utils/gnl/get_next_line.c	  \
 		
 

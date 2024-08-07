@@ -23,14 +23,18 @@ void	print_error(int n, int fd, t_game *game)
 	else if (n == 3)
 		write(1, "file not found", 14);
 	else if (n == 4)
-		write(1, "map is not a quadrilateral\n", 27);
+		write(1, "map is not a rectangle\n", 23);
 	else if (n == 5)
 		write(1, "wrong walls\n", 12);
 	else if (n == 6)
 		write(1, "less or more than 1 exit\n", 25);
 	else if (n == 7)
 		write(1, "less or more than 1 player\n", 27);
+	else if (n == 8)
+		write(1, "unexpected character in map\n", 28);
+	else if (n == 9)
+		write(1, "no coins\n", 9);
 	if (game != NULL || fd != -1)
-		free_max(fd, game);
+		free_max(fd, game, 2);
 	exit(1);
 }

@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 
 	game = malloc(sizeof(t_game));
 	fd = check(argc, argv, game);
-	free_max(fd, game);
+	free_max(fd, game, 2);
 	return (0);
 }
 
@@ -27,11 +27,8 @@ void	printus(char **arr)
 {
 	int	i;
 
-	i = 0;
-	while (arr[i])
-	{
+	i = -1;
+	while (arr[++i])
 		printf("%s\n", arr[i]);
-		i++;
-	}
 	printf("%s\n", arr[i]);
 }

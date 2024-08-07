@@ -12,6 +12,27 @@
 
 #include "../../includes/so_long.h"
 
+int	height(char *path)
+{
+	char	*temp;
+	int		fd;
+	int		i;
+
+	i = 0;
+	fd = open(path, O_RDONLY);
+	while (1)
+	{
+		i++;
+		temp = get_next_line(fd);
+		if (temp == NULL)
+			break ;
+		free(temp);
+	}
+	free(temp);
+	close(fd);
+	return (i);
+}
+
 int	ft_strcmp(char *str, char *str2)
 {
 	int	i;
@@ -26,18 +47,26 @@ int	ft_strcmp(char *str, char *str2)
 	return (0);
 }
 
-void	free_max(int fd, t_game *game)
+void	free_max(int fd, t_game *game, int n)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (fd != -1)
 		close(fd);
-	while (game->map[i])
+	if (game->map && n == 2)
 	{
-		free((void *)game->map[i]);
-		i++;
+		while (game->map[++i] != NULL)
+			free(game->map[i]);
+		free(game->map);
 	}
-	free(game->map);
-	free(game);
+	i = -1;
+	if (game->cpy && n >= 1)
+	{
+		while (game->cpy[++i] != NULL)
+			free(game->cpy[i]);
+		free(game->cpy);
+	}
+	if (game)
+		free(game);
 }
