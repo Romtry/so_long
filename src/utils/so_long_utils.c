@@ -22,8 +22,8 @@ int	height(char *path)
 	fd = open(path, O_RDONLY);
 	while (1)
 	{
-		i++;
 		temp = get_next_line(fd);
+		i++;
 		if (temp == NULL)
 			break ;
 		free(temp);
@@ -54,17 +54,20 @@ void	free_max(int fd, t_game *game, int n)
 	i = -1;
 	if (fd != -1)
 		close(fd);
-	if (game->map && n == 2)
+	if (game->map && (n == 1 || n == 3))
 	{
 		while (game->map[++i] != NULL)
 			free(game->map[i]);
 		free(game->map);
 	}
-	i = -1;
-	if (game->cpy && n >= 1)
+	i = 0;
+	if (game->cpy && (n == 2 || n == 3))
 	{
-		while (game->cpy[++i] != NULL)
+		while (game->cpy[i] != NULL)
+		{
 			free(game->cpy[i]);
+			i++;
+		}
 		free(game->cpy);
 	}
 	if (game)

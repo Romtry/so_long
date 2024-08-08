@@ -13,14 +13,16 @@
 NAME=	so_long
 
 SRC= 	src/parsing/parsing.c	src/parsing/print_error.c	src/utils/so_long_utils.c \
-		src/so_long.c			src/utils/checkmap_utils.c	src/utils/flood_fill_utils.c \
+		src/so_long.c			src/utils/checkmap_utils.c	src/utils/ff_utils.c 	  \
+		src/utils/ff_utils2.c \
 		src/utils/gnl/get_next_line_utils.c			src/utils/gnl/get_next_line.c	  \
-		
 
 OFILES= ${SRC:%.c=obj/%.o}
 
 CC= 	cc
 CFLAGS= -Wall -Wextra -Werror -fsanitize=address -g3
+
+MINILIBX= ./includes/.mlx
 
 RESET = \033[0m
 GRAS = \033[1m
@@ -46,7 +48,14 @@ REST = ${shell expr 23 - ${BAR}}
 all:	${NAME}
 
 ${NAME}:		${OFILES}
-		@${CC} ${CFLAGS} ${OFILES} -o ${NAME}
+		@${MAKE} -C ${MINILIBX} > /dev/null 2>&1
+		@${eval FICH_COUNT = ${shell expr ${FICH_COUNT} + 1}}
+		@file_name=MINILIBX && \
+		echo " ${GRAS}${RED}-> COMPILING${RESET}${GRAS}${GREEN}${RESET}" && \
+		printf " ${RED}${GRAS}[${GREEN}%-.${BAR}s${DARK_RED}%-.${REST}s${RED}] [%d/%d (%d%%)] ${GREEN}%s  ✓                         ${DEF_COLOR}" "-----------------------" "-----------------------" ${FICH_COUNT} ${NBR_TOT_FICHIER} ${NBR_COMPILER} $${file_name} && \
+		echo "${UP}${UP}${UP}" && \
+		echo ""
+		@${CC} ${CFLAGS} ${OFILES} -L${MINILIBX} -lmlx -lX11 -lXext -lm -o ${NAME}
 		@echo "\n\n${GREEN}[✓] - ${_GREEN}so_long${GREEN} Successfully Compiled!${RESET}"
 
 obj/%.o:%.c
@@ -60,6 +69,7 @@ obj/%.o:%.c
 	echo ""
 
 clean:
+	@${MAKE} -C ${MINILIBX} clean > /dev/null
 	@rm -rf obj
 	@echo "${ORANGE}${GRAS}\tNETTOYAGE${RESET}"
 	@echo "${RED}${ITALIQUE} -files successfully removed${RESET}"

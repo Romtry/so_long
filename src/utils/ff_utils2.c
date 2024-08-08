@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   ff_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rothiery <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/01 09:54:50 by rothiery          #+#    #+#             */
-/*   Updated: 2024/08/01 09:54:51 by rothiery         ###   ########.fr       */
+/*   Created: 2024/08/08 11:00:13 by rothiery          #+#    #+#             */
+/*   Updated: 2024/08/08 11:00:17 by rothiery         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
-int	main(int argc, char **argv)
-{
-	int		fd;
-	t_game	*game;
-
-	game = malloc(sizeof(t_game));
-	fd = check(argc, argv, game);
-	free_max(fd, game, 3);
-	return (0);
-}
-
-void	printus(char **arr)
+void	player_pos(t_game *game)
 {
 	int	i;
+	int	j;
 
 	i = -1;
-	while (arr[++i])
-		printf("%s\n", arr[i]);
-	write(1, "\n", 1);
+	j = -1;
+	while (game->map[++i])
+	{
+		while (game->map[i][++j])
+		{
+			if (game->map[i][j] == 'P')
+			{
+				game->px = j;
+				game->py = i;
+			}
+		}
+		j = -1;
+	}
+}
+
+int	exit_pos(t_game *game, int e, int i, int j)
+{
+	e++;
+	game->ex = j;
+	game->ey = i;
+	return (e);
 }

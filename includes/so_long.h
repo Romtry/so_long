@@ -17,9 +17,14 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include ".mlx/mlx.h"
 
 typedef struct s_game
 {
+	int		ex;
+	int		ey;
+	int		x;
+	int		y;
 	int		px;
 	int		py;
 	int		coin;
@@ -49,8 +54,13 @@ int		height(char *path);
 void	free_max(int fd, t_game *game, int n);
 int		ft_strcmp(char *str, char *str2);
 
-// flood_fill_utils.c
+// ff_utils.c
+int		void_next(t_game *game, int *count);
+void	algo_ff(t_game *game);
 void	map_cpy(t_game *game);
+
+// ff_utils2.c
+int		exit_pos(t_game *game, int e, int i, int j);
 void	player_pos(t_game *game);
 
 //get_next_line

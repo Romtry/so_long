@@ -54,7 +54,7 @@ void	check_content(t_game *game)
 		while (game->map[i][++j])
 		{
 			if (game->map[i][j] == 'E')
-				e++;
+				e = exit_pos(game, e, i, j);
 			else if (game->map[i][j] == 'P')
 				p++;
 			else if (game->map[i][j] != '0' && game->map[i][j] != '1'
@@ -77,7 +77,7 @@ void	check_walls(t_game *game)
 			print_error(5, -1, game);
 	}
 	i = -1;
-	while (game->map[++i] != NULL)
+	while (game->map[++i + 1] != NULL)
 	{
 		if (game->map[i][0] != '1' || game->map[i][game->width - 1] != '1')
 			print_error(5, -1, game);
