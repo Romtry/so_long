@@ -22,7 +22,7 @@ OFILES= ${SRC:%.c=obj/%.o}
 CC= 	cc
 CFLAGS= -Wall -Wextra -Werror -fsanitize=address -g3
 
-MINILIBX= ./includes/.mlx
+MINILIBX= includes/.minilibx
 
 RESET = \033[0m
 GRAS = \033[1m
