@@ -37,37 +37,36 @@ int	ft_strcmp(char *str, char *str2)
 {
 	int	i;
 
-	i = 0;
-	while (str[i])
+	i = -1;
+	if (ft_strlen(str) < ft_strlen(str2))
+		return (1);
+	while (str[++i])
 	{
-		if (str[i] != str2[i])
+		if (str[i] != str2[i] || str[i] == '\0')
 			return (1);
-		i++;
 	}
 	return (0);
 }
 
-void	free_max(int fd, t_game *game, int n)
+void	free_max(int fd, t_game *game)
 {
 	int	i;
 
 	i = -1;
 	if (fd != -1)
 		close(fd);
-	if (game->map && (n == 1 || n == 3))
+	if (game && game->map != NULL )
 	{
 		while (game->map[++i] != NULL)
 			free(game->map[i]);
 		free(game->map);
 	}
-	i = 0;
-	if (game->cpy && (n == 2 || n == 3))
+	i = -1;
+	// printf("%p\n", game->cpy[0]);
+	if (game != NULL && game->cpy)
 	{
-		while (game->cpy[i] != NULL)
-		{
+		while (game->cpy[++i] != NULL)
 			free(game->cpy[i]);
-			i++;
-		}
 		free(game->cpy);
 	}
 	if (game)

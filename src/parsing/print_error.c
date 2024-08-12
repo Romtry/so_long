@@ -36,9 +36,6 @@ void	print_error(int n, int fd, t_game *game)
 		write(1, "no coins\n", 9);
 	else if (n == 10)
 		write(1, "player can't find coins or exit\n", 32);
-	if (n <= 9)
-		free_max(fd, game, 1);
-	else
-		free_max(fd, game, 3);
+	free_max(fd, game);
 	exit(1);
 }

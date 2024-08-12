@@ -17,7 +17,16 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include ".minilibx/mlx.h"
+# include ".mlx/mlx.h"
+
+typedef struct s_aff
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		length;
+	int		endian;
+}				t_aff;
 
 typedef struct s_game
 {
@@ -51,7 +60,7 @@ void	check_rectangle(t_game *game);
 
 //so_long_utils.c
 int		height(char *path);
-void	free_max(int fd, t_game *game, int n);
+void	free_max(int fd, t_game *game);
 int		ft_strcmp(char *str, char *str2);
 
 // ff_utils.c

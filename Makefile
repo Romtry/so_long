@@ -6,7 +6,7 @@
 #    By: rothiery <rothiery@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 09:50:21 by rothiery          #+#    #+#              #
-#    Updated: 2024/08/01 09:32:13 by rothiery         ###   ########.fr        #
+#    Updated: 2024/08/12 14:26:56 by rothiery         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME=	so_long
 
 SRC= 	src/parsing/parsing.c	src/parsing/print_error.c	src/utils/so_long_utils.c \
 		src/so_long.c			src/utils/checkmap_utils.c	src/utils/ff_utils.c 	  \
-		src/utils/ff_utils2.c \
+		src/utils/ff_utils2.c									  \
 		src/utils/gnl/get_next_line_utils.c			src/utils/gnl/get_next_line.c	  \
 
 OFILES= ${SRC:%.c=obj/%.o}
@@ -22,7 +22,7 @@ OFILES= ${SRC:%.c=obj/%.o}
 CC= 	cc
 CFLAGS= -Wall -Wextra -Werror -fsanitize=address -g3
 
-MINILIBX= includes/.minilibx
+MINILIBX= ./includes/.mlx
 
 RESET = \033[0m
 GRAS = \033[1m

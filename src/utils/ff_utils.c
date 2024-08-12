@@ -43,18 +43,11 @@ void	recu_next(t_game *game, int n, int *count)
 int	void_next(t_game *game, int *count)
 {
 	int	n;
-	// static int	i;
 
 	if (game->cpy[game->y][game->x] == 'C'
 		|| game->cpy[game->y][game->x] == 'E')
 		*count = *count + 1;
 	game->cpy[game->y][game->x] = 'X';
-	// i++;
-	// if (i > 1035)
-		// exit(0);
-	// printf("%d, %d\n", game->y, game->x);
-	// printf("%d\n", *count);
-	// printus(game->cpy);
 	if (game->cpy[game->y][game->x + 1] != '1'
 		&& game->cpy[game->y][game->x + 1] != 'X')
 		n = 0;
@@ -89,7 +82,6 @@ void	algo_ff(t_game *game)
 		game->x = game->px;
 		game->y = game->py;
 	}
-	// printf("%d, %d\n", count, game->coin + 1);
 	if (count != game->coin + 1)
 		print_error(10, -1, game);
 }
