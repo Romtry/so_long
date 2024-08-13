@@ -56,7 +56,7 @@ ${NAME}:		${OFILES}
 		echo "${UP}${UP}${UP}" && \
 		echo ""
 		@${CC} ${CFLAGS} ${OFILES} -L${MINILIBX} -lmlx -lX11 -lXext -lm -o ${NAME}
-		@echo "\n\n${GREEN}[✓] - ${_GREEN}so_long${GREEN} Successfully Compiled!${RESET}"
+		@echo "\n\n${GREEN} [✓] - ${_GREEN}so_long${GREEN} Successfully Compiled!${RESET}"
 
 obj/%.o:%.c
 	@mkdir -p obj/$(dir $<)
