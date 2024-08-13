@@ -15,7 +15,7 @@ NAME=	so_long
 SRC= 	src/parsing/parsing.c	src/parsing/print_error.c	src/utils/so_long_utils.c \
 		src/so_long.c			src/utils/checkmap_utils.c	src/utils/ff_utils.c 	  \
 		src/utils/ff_utils2.c									  \
-		src/utils/get_nl/get_next_line_utils.c			src/utils/get_nl/get_next_line.c	  \
+		src/utils/gnl/get_next_line_utils.c			src/utils/gnl/get_next_line.c	  \
 
 OFILES= ${SRC:%.c=obj/%.o}
 
