@@ -19,14 +19,24 @@
 # include <stdlib.h>
 # include ".mlx/mlx.h"
 
-typedef struct s_aff
+# define ESC 65307
+# define UP 65362
+# define LEFT 65361
+# define DOWN 65364
+# define RIGHT 65363
+
+
+
+struct t_aff
 {
+	void	*mlx;
+	void	*mlx_win;
 	void	*img;
 	char	*addr;
 	int		bpp;
 	int		length;
 	int		endian;
-}				t_aff;
+};
 
 typedef struct s_game
 {
@@ -41,6 +51,7 @@ typedef struct s_game
 	size_t	width;
 	char	**map;
 	char	**cpy;
+	struct t_aff aff;
 }	t_game;
 
 //so_long.c
@@ -71,6 +82,9 @@ void	map_cpy(t_game *game);
 // ff_utils2.c
 int		exit_pos(t_game *game, int e, int i, int j);
 void	player_pos(t_game *game);
+
+// mlx_utils.c
+void	mlx_aff(t_game *game);
 
 //get_next_line
 char	*get_next_line(int fd);
