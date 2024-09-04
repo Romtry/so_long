@@ -62,7 +62,6 @@ void	free_max(int fd, t_game *game)
 		free(game->map);
 	}
 	i = -1;
-	// printf("%p\n", game->cpy[0]);
 	if (game != NULL && game->cpy)
 	{
 		while (game->cpy[++i] != NULL)

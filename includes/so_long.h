@@ -19,39 +19,48 @@
 # include <stdlib.h>
 # include ".mlx/mlx.h"
 
+# define PIXEL 48
 # define ESC 65307
 # define UP 65362
 # define LEFT 65361
 # define DOWN 65364
 # define RIGHT 65363
+# define WALL "./bush.xpm"
+# define COIN "./gapp.xpm"
+# define ROOF "./roof.xpm"
+# define EXIT "./trap.xpm"
 
-
-
-struct t_aff
+struct s_img
 {
-	void	*mlx;
-	void	*mlx_win;
 	void	*img;
-	char	*addr;
-	int		bpp;
-	int		length;
-	int		endian;
+};
+
+struct s_aff
+{
+	void			*mlx;
+	void			*mlx_win;
+	void			*img;
+	char			*addr;
+	int				bpp;
+	int				length;
+	int				endian;
 };
 
 typedef struct s_game
 {
-	int		ex;
-	int		ey;
-	int		x;
-	int		y;
-	int		px;
-	int		py;
-	int		coin;
-	size_t	height;
-	size_t	width;
-	char	**map;
-	char	**cpy;
-	struct t_aff aff;
+	int				ex;
+	int				ey;
+	int				x;
+	int				y;
+	int				px;
+	int				py;
+	int				coin;
+	size_t			height;
+	size_t			width;
+	char			**map;
+	char			**cpy;
+	struct s_aff	aff;
+	struct s_img	img;
 }	t_game;
 
 //so_long.c
@@ -85,6 +94,9 @@ void	player_pos(t_game *game);
 
 // mlx_utils.c
 void	mlx_aff(t_game *game);
+void	mlx_draw(t_game *game);
+int		game_end(t_game *game);
+void	put_pixel(t_game *game, int y, int x, char c);
 
 //get_next_line
 char	*get_next_line(int fd);

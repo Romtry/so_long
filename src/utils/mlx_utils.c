@@ -18,61 +18,13 @@
 // Void blanc
 // Wall gris
 
-int	set_color(char	c)
+void	after_move(t_game *game, int y, int x)
 {
-	if (c == 'E')
-		return (0x1A00FF);
-	else if (c == 'P')
-		return (0xFF0000);
-	else if (c == 'C')
-		return (0xFFEF00);
-	else if (c == '0')
-		return (0xFFFFFF);
-	else if (c == '1')
-		return (0x6B6B6B);
-	else
-		return (0x000000);
-}
-
-void	put_pixel(t_game *game, int y, int x, char c)
-{
-	int		i;
-	int		j;
-
-	i = x + 20;
-	j = y + 20;
-	while (y < j)
-	{
-		while (x < i)
-		{
-			mlx_pixel_put(game->aff.mlx, game->aff.mlx_win, x, y, set_color(c));
-			x++;
-		}
-		x = i - 20;
-		y++;
-	}
-}
-
-void	mlx_draw(t_game *game)
-{
-	int		x;
-	int		y;
-
-	x = -1;
-	y = -1;
-	while (game->map[++y] != NULL)
-	{
-		while (game->map[y][++x])
-			put_pixel(game, y * 20, x * 20, game->map[y][x]);
-		x = -1;
-	}
-}
-int	game_end(t_game *game)
-{
-	mlx_clear_window(game->aff.mlx, game->aff.mlx_win);
-	mlx_destroy_window(game->aff.mlx, game->aff.mlx_win);
-	free_max(-1, game);
-	exit (0);
+	put_pixel(game, y * PIXEL, x * PIXEL, game->map[y][x]);
+	put_pixel(game, game->py * PIXEL, game->px * PIXEL,
+		game->map[game->py][game->px]);
+	game->px = x;
+	game->py = y;
 }
 
 void	moves(int x, int y, t_game *game)
@@ -96,11 +48,10 @@ void	moves(int x, int y, t_game *game)
 		if (game->coin == 0)
 			game_end(game);
 	}
-	if (game->map[y][x] == '0' || game->map[y][x] == 'C' || game->map[y][x] == 'E')
+	if (game->map[y][x] == '0' || game->map[y][x] == 'C'
+		|| game->map[y][x] == 'E')
 		game->map[y][x] = 'P';
-	game->px = x;
-	game->py = y;
-	mlx_draw(game);
+	after_move(game, y, x);
 }
 
 int	key_func(int keycode, t_game *game)
@@ -121,9 +72,10 @@ int	key_func(int keycode, t_game *game)
 void	mlx_aff(t_game *game)
 {
 	game->aff.mlx = mlx_init();
-	game->aff.mlx_win = mlx_new_window(game->aff.mlx, game->width * 20, game->height * 20, "So_long");
+	game->aff.mlx_win = mlx_new_window(game->aff.mlx, game->width * PIXEL,
+			game->height * PIXEL, "So_long");
 	mlx_draw(game);
-	mlx_hook(game->aff.mlx_win, 2, 1L<<0, key_func, game);
+	mlx_hook(game->aff.mlx_win, 2, 1L << 0, key_func, game);
 	mlx_hook(game->aff.mlx_win, 17, 0L, game_end, game);
 	mlx_loop(game->aff.mlx);
 }

@@ -14,7 +14,7 @@ NAME=	so_long
 
 SRC= 	src/parsing/parsing.c	src/parsing/print_error.c	src/utils/so_long_utils.c \
 		src/so_long.c			src/utils/checkmap_utils.c	src/utils/ff_utils.c 	  \
-		src/utils/ff_utils2.c	src/utils/mlx_utils.c							  \
+		src/utils/ff_utils2.c	src/utils/mlx_utils.c		src/utils/mlx_utils2.c	  \
 		src/utils/gnl/get_next_line_utils.c			src/utils/gnl/get_next_line.c	  \
 
 OFILES= ${SRC:%.c=obj/%.o}
@@ -38,7 +38,7 @@ DARK_RED = \033[38;5;88m
 GREEN = \033[38;5;85m
 
 #change value with number of src files !
-NBR_TOT_FICHIER = 11
+NBR_TOT_FICHIER = 12
 
 FICH_COUNT = 0
 NBR_COMPILER = ${shell expr 100 \* ${FICH_COUNT} / ${NBR_TOT_FICHIER}}
