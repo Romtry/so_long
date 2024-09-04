@@ -36,7 +36,6 @@ int	set_color(char	c)
 
 void	put_pixel(t_game *game, int y, int x, char c)
 {
-	char	*dst;
 	int		i;
 	int		j;
 
@@ -46,8 +45,7 @@ void	put_pixel(t_game *game, int y, int x, char c)
 	{
 		while (x < i)
 		{
-			dst = game->aff.addr + (y * game->aff.length + x * (game->aff.bpp / 8));
-			*(unsigned int*)dst = set_color(c);
+			mlx_pixel_put(game->aff.mlx, game->aff.mlx_win, x, y, set_color(c));
 			x++;
 		}
 		x = i - 20;
@@ -69,30 +67,19 @@ void	mlx_draw(t_game *game)
 		x = -1;
 	}
 }
-// void	game_end(int n, t_game *game)
-// {
-// }
+int	game_end(t_game *game)
+{
+	mlx_clear_window(game->aff.mlx, game->aff.mlx_win);
+	mlx_destroy_window(game->aff.mlx, game->aff.mlx_win);
+	free_max(-1, game);
+	exit (0);
+}
 
 void	moves(int x, int y, t_game *game)
 {
 	static int	on_ex;
 
-	if (game->map[y][x] == '0')
-		game->map[y][x] = 'P';
-	// if (game->map[y][x] == 'E')
-	// {
-	// 	on_ex = 1;
-	// 	game->map[y][x] = 'P';
-	// 	if (game->coin == 0)
-	// 	{
-	// 		mlx_destroy_window(game->mlx, game->mlx_win);
-	// 		free_max(-1, game);
-	// 		exit (0);
-	// 	}
-	// if (game->map[y][x] == 'C')
-	// 	game->coin--;
-	// else if (game->map[y][x] == '')
-	else
+	if (game->map[y][x] == '1')
 		return ;
 	if (on_ex == 1)
 	{
@@ -101,21 +88,25 @@ void	moves(int x, int y, t_game *game)
 	}
 	else
 		game->map[game->py][game->px] = '0';
+	if (game->map[y][x] == 'C')
+		game->coin--;
+	else if (game->map[y][x] == 'E')
+	{
+		on_ex = 1;
+		if (game->coin == 0)
+			game_end(game);
+	}
+	if (game->map[y][x] == '0' || game->map[y][x] == 'C' || game->map[y][x] == 'E')
+		game->map[y][x] = 'P';
 	game->px = x;
 	game->py = y;
-	printus(game->map);
-	mlx_clear_window(game->aff.mlx, game->aff.mlx_win);
 	mlx_draw(game);
 }
 
 int	key_func(int keycode, t_game *game)
 {
 	if (keycode == ESC)
-	{
-		mlx_destroy_window(game->aff.mlx, game->aff.mlx_win);
-		free_max(-1, game);
-		exit (0);
-	}
+		game_end(game);
 	else if (keycode == UP)
 		moves(game->px, game->py - 1, game);
 	else if (keycode == LEFT)
@@ -130,12 +121,9 @@ int	key_func(int keycode, t_game *game)
 void	mlx_aff(t_game *game)
 {
 	game->aff.mlx = mlx_init();
-	game->aff.mlx_win = mlx_new_window(game->aff.mlx, 800, 500, "So_long");
-	game->aff.img = mlx_new_image(game->aff.mlx, 800, 500);
-	game->aff.addr = mlx_get_data_addr(game->aff.img, &game->aff.bpp, &game->aff.length,
-							&game->aff.endian);
+	game->aff.mlx_win = mlx_new_window(game->aff.mlx, game->width * 20, game->height * 20, "So_long");
 	mlx_draw(game);
-	mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->aff.img, 0, 0);
 	mlx_hook(game->aff.mlx_win, 2, 1L<<0, key_func, game);
+	mlx_hook(game->aff.mlx_win, 17, 0L, game_end, game);
 	mlx_loop(game->aff.mlx);
 }
