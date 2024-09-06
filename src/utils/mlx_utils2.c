@@ -12,72 +12,63 @@
 
 #include "../../includes/so_long.h"
 
-int	game_end(t_game *game)
+int	game_end(t_game *game, int i)
 {
-	mlx_destroy_image(game->aff.mlx, game->img.img);
+	mlx_destroy_image(game->aff.mlx, game->img.p);
+	mlx_destroy_image(game->aff.mlx, game->img.pl);
+	mlx_destroy_image(game->aff.mlx, game->img.pt);
+	mlx_destroy_image(game->aff.mlx, game->img.pr);
+	mlx_destroy_image(game->aff.mlx, game->img.ep);
+	mlx_destroy_image(game->aff.mlx, game->img.epl);
+	mlx_destroy_image(game->aff.mlx, game->img.ept);
+	mlx_destroy_image(game->aff.mlx, game->img.epr);
+	mlx_destroy_image(game->aff.mlx, game->img.coin);
+	mlx_destroy_image(game->aff.mlx, game->img.wall);
+	mlx_destroy_image(game->aff.mlx, game->img.exit);
+	mlx_destroy_image(game->aff.mlx, game->img.exit2);
+	mlx_destroy_image(game->aff.mlx, game->img.floor);
 	mlx_clear_window(game->aff.mlx, game->aff.mlx_win);
 	mlx_destroy_window(game->aff.mlx, game->aff.mlx_win);
 	free_max(-1, game);
+	if (i == 0)
+		write(1, "GAME CLOSE\n", 11);
+	else
+		write(1, "WIN !\n", 6);
 	exit (0);
 }
 
-int	set_color(char c)
-{
-	if (c == 'E')
-		return (0x1A00FF);
-	else if (c == 'P')
-		return (0xFF0000);
-	else if (c == 'C')
-		return (0xFFEF00);
-	else if (c == '0')
-		return (0xFFFFFF);
-	else if (c == '1')
-		return (0x707070);
-	else
-		return (0x000000);
-}
-
-void	put_pixel2(t_game *game, int y, int x, char c)
+void	init_imgs(t_game *game)
 {
 	int	i;
 
-	(void)c;
 	i = PIXEL;
-	if (c == '1')
-		game->img.img = mlx_xpm_file_to_image(game->aff.mlx, WALL, &i, &i);
-	else if (c == 'C')
-		game->img.img = mlx_xpm_file_to_image(game->aff.mlx, COIN, &i, &i);
-	else if (c == '0')
-		game->img.img = mlx_xpm_file_to_image(game->aff.mlx, ROOF, &i, &i);
-	else if (c == 'E')
-		game->img.img = mlx_xpm_file_to_image(game->aff.mlx, EXIT, &i, &i);
-	if (!(game->img.img || game->img.img))
-		exit(1);
-	mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->img.img, x, y);
+	game->img.p = mlx_xpm_file_to_image(game->aff.mlx, P, &i, &i);
+	game->img.pl = mlx_xpm_file_to_image(game->aff.mlx, PL, &i, &i);
+	game->img.pt = mlx_xpm_file_to_image(game->aff.mlx, PB, &i, &i);
+	game->img.pr = mlx_xpm_file_to_image(game->aff.mlx, PR, &i, &i);
+	game->img.ep = mlx_xpm_file_to_image(game->aff.mlx, EP, &i, &i);
+	game->img.epl = mlx_xpm_file_to_image(game->aff.mlx, EPL, &i, &i);
+	game->img.ept = mlx_xpm_file_to_image(game->aff.mlx, EPB, &i, &i);
+	game->img.epr = mlx_xpm_file_to_image(game->aff.mlx, EPR, &i, &i);
+	game->img.coin = mlx_xpm_file_to_image(game->aff.mlx, COIN, &i, &i);
+	game->img.floor = mlx_xpm_file_to_image(game->aff.mlx, FLOOR, &i, &i);
+	game->img.exit2 = mlx_xpm_file_to_image(game->aff.mlx, EXIT2, &i, &i);
+	game->img.exit = mlx_xpm_file_to_image(game->aff.mlx, EXIT, &i, &i);
+	game->img.wall = mlx_xpm_file_to_image(game->aff.mlx, WALL, &i, &i);
 }
 
-void	put_pixel(t_game *game, int y, int x, char c)
+void	put_imgs(t_game *game, int y, int x, char c)
 {
-	int		i;
-	int		j;
-
-	i = x + PIXEL;
-	j = y + PIXEL;
-	if (c == 'P')
-	{
-		while (y < j)
-		{
-			while (x < i)
-			{
-				mlx_pixel_put(game->aff.mlx, game->aff.mlx_win, x, y, set_color(c));
-				x++;
-			}
-			x = i - PIXEL;
-			y++;
-		}
-	}
-	else
-		put_pixel2(game, y, x, c);
+	if (c == '1')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->img.wall, x, y);
+	else if (c == 'C')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->img.coin, x, y);
+	else if (c == '0')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->img.floor, x, y);
+	else if (c == 'E')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->img.exit, x, y);
+	else if (c == 'P')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->img.p, x, y);
 }
 
 void	mlx_draw(t_game *game)
@@ -90,7 +81,7 @@ void	mlx_draw(t_game *game)
 	while (game->map[++y] != NULL)
 	{
 		while (game->map[y][++x])
-			put_pixel(game, y * PIXEL, x * PIXEL, game->map[y][x]);
+			put_imgs(game, y * PIXEL, x * PIXEL, game->map[y][x]);
 		x = -1;
 	}
 }

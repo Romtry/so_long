@@ -25,14 +25,35 @@
 # define LEFT 65361
 # define DOWN 65364
 # define RIGHT 65363
-# define WALL "./bush.xpm"
-# define COIN "./gapp.xpm"
-# define ROOF "./roof.xpm"
-# define EXIT "./trap.xpm"
+# define WALL "./assets/bush.xpm"
+# define COIN "./assets/gapp.xpm"
+# define FLOOR "./assets/floor.xpm"
+# define EXIT "./assets/trap.xpm"
+# define EXIT2 "./assets/trappopened.xpm"
+# define P "./assets/link.xpm"
+# define PL "./assets/link_left.xpm"
+# define PB "./assets/link_back.xpm"
+# define PR "./assets/link_right.xpm"
+# define EP "./assets/trap_link.xpm"
+# define EPL "./assets/trap_link_left.xpm"
+# define EPB "./assets/trap_link_back.xpm"
+# define EPR "./assets/trap_link_right.xpm"
 
 struct s_img
 {
-	void	*img;
+	void	*p;
+	void	*pl;
+	void	*pt;
+	void	*pr;
+	void	*ep;
+	void	*epl;
+	void	*ept;
+	void	*epr;
+	void	*wall;
+	void	*floor;
+	void	*exit;
+	void	*exit2;
+	void	*coin;
 };
 
 struct s_aff
@@ -95,8 +116,9 @@ void	player_pos(t_game *game);
 // mlx_utils.c
 void	mlx_aff(t_game *game);
 void	mlx_draw(t_game *game);
-int		game_end(t_game *game);
-void	put_pixel(t_game *game, int y, int x, char c);
+int		game_end(t_game *game, int i);
+void	init_imgs(t_game *game);
+void	put_imgs(t_game *game, int y, int x, char c);
 
 //get_next_line
 char	*get_next_line(int fd);

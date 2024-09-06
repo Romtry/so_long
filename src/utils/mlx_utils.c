@@ -18,16 +18,62 @@
 // Void blanc
 // Wall gris
 
-void	after_move(t_game *game, int y, int x)
+void	after_move(t_game *game, int y, int x, char m)
 {
-	put_pixel(game, y * PIXEL, x * PIXEL, game->map[y][x]);
-	put_pixel(game, game->py * PIXEL, game->px * PIXEL,
+	int	i;
+
+	i = PIXEL;
+	if (m == 'L')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.pl, x * PIXEL, y * PIXEL);
+	else if (m == 'T')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.pt, x * PIXEL, y * PIXEL);
+	else if (m == 'D')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.p, x * PIXEL, y * PIXEL);
+	else if (m == 'R')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.pr, x * PIXEL, y * PIXEL);
+	put_imgs(game, game->py * PIXEL, game->px * PIXEL,
 		game->map[game->py][game->px]);
 	game->px = x;
 	game->py = y;
 }
 
-void	moves(int x, int y, t_game *game)
+void	coin_func(t_game *game)
+{
+	game->coin--;
+	if (game->coin == 0)
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.exit2, game->ex * PIXEL, game->ey * PIXEL);
+}
+
+int	on_ex_f(t_game *game, int y, int x, char m)
+{
+	int	i;
+
+	i = PIXEL;
+	put_imgs(game, game->py * PIXEL, game->px * PIXEL,
+		game->map[game->py][game->px]);
+	if (m == 'L')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.epl, x * PIXEL, y * PIXEL);
+	else if (m == 'T')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.ept, x * PIXEL, y * PIXEL);
+	else if (m == 'D')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.ep, x * PIXEL, y * PIXEL);
+	else if (m == 'R')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.epr, x * PIXEL, y * PIXEL);
+	game->px = x;
+	game->py = y;
+	return (1);
+}
+
+void	moves(int x, int y, t_game *game, char m)
 {
 	static int	on_ex;
 
@@ -41,31 +87,31 @@ void	moves(int x, int y, t_game *game)
 	else
 		game->map[game->py][game->px] = '0';
 	if (game->map[y][x] == 'C')
-		game->coin--;
+		coin_func(game);
 	else if (game->map[y][x] == 'E')
 	{
-		on_ex = 1;
+		on_ex = on_ex_f(game, y, x, m);
 		if (game->coin == 0)
-			game_end(game);
+			game_end(game, 1);
 	}
-	if (game->map[y][x] == '0' || game->map[y][x] == 'C'
-		|| game->map[y][x] == 'E')
+	if (game->map[y][x] == '0' || game->map[y][x] == 'C')
 		game->map[y][x] = 'P';
-	after_move(game, y, x);
+	if (game->map[y][x] != 'E')
+		after_move(game, y, x, m);
 }
 
 int	key_func(int keycode, t_game *game)
 {
 	if (keycode == ESC)
-		game_end(game);
+		game_end(game, 0);
 	else if (keycode == UP)
-		moves(game->px, game->py - 1, game);
+		moves(game->px, game->py - 1, game, 'T');
 	else if (keycode == LEFT)
-		moves(game->px - 1, game->py, game);
+		moves(game->px - 1, game->py, game, 'L');
 	else if (keycode == DOWN)
-		moves(game->px, game->py + 1, game);
+		moves(game->px, game->py + 1, game, 'D');
 	else if (keycode == RIGHT)
-		moves(game->px + 1, game->py, game);
+		moves(game->px + 1, game->py, game, 'R');
 	return (0);
 }
 
@@ -74,6 +120,7 @@ void	mlx_aff(t_game *game)
 	game->aff.mlx = mlx_init();
 	game->aff.mlx_win = mlx_new_window(game->aff.mlx, game->width * PIXEL,
 			game->height * PIXEL, "So_long");
+	init_imgs(game);
 	mlx_draw(game);
 	mlx_hook(game->aff.mlx_win, 2, 1L << 0, key_func, game);
 	mlx_hook(game->aff.mlx_win, 17, 0L, game_end, game);
