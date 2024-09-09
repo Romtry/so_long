@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/so_long.h"
+#include "so_long.h"
 
 int	game_end(t_game *game, int i)
 {
@@ -29,6 +29,11 @@ int	game_end(t_game *game, int i)
 	mlx_destroy_image(game->aff.mlx, game->img.floor);
 	mlx_clear_window(game->aff.mlx, game->aff.mlx_win);
 	mlx_destroy_window(game->aff.mlx, game->aff.mlx_win);
+	if (game->str)
+	{
+		free(game->str);
+		free(game->shdw);
+	}
 	free_max(-1, game);
 	if (i == 0)
 		write(1, "GAME CLOSE\n", 11);
@@ -84,4 +89,6 @@ void	mlx_draw(t_game *game)
 			put_imgs(game, y * PIXEL, x * PIXEL, game->map[y][x]);
 		x = -1;
 	}
+	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 11, 11, 0, "MOVES = 0");
+	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 10, 10, 0xFFFFFF, "MOVES = 0");
 }

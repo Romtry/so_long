@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/so_long.h"
+#include "so_long.h"
 
 int	height(char *path)
 {
@@ -70,4 +70,30 @@ void	free_max(int fd, t_game *game)
 	}
 	if (game)
 		free(game);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*dest;
+	size_t	i;
+	size_t	s1l;
+
+	s1l = ft_strlen((char *)s1);
+	i = 0;
+	dest = malloc(sizeof(char) * (s1l + ft_strlen((char *)s2) + 1));
+	if (dest == NULL)
+		return (NULL);
+	while (i < s1l)
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	while (i < (s1l + ft_strlen((char *)s2)))
+	{
+		dest[i] = s2[i - s1l];
+		i++;
+	}
+	dest[i] = '\0';
+	free((char *)s2);
+	return (dest);
 }

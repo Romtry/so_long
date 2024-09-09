@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/so_long.h"
+#include "so_long.h"
 
 void	recu_next(t_game *game, int n, int *count)
 {
@@ -70,9 +70,7 @@ int	void_next(t_game *game, int *count)
 void	algo_ff(t_game *game)
 {
 	int	count;
-	int	i;
 
-	i = 0;
 	count = 0;
 	game->x = game->px;
 	game->y = game->py;

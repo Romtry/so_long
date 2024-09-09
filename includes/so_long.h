@@ -13,6 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# include <limits.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -76,8 +77,11 @@ typedef struct s_game
 	int				px;
 	int				py;
 	int				coin;
+	int				moves;
 	size_t			height;
 	size_t			width;
+	char			*str;
+	char			*shdw;
 	char			**map;
 	char			**cpy;
 	struct s_aff	aff;
@@ -99,10 +103,14 @@ void	print_error(int n, int fd, t_game *game);
 //checkmap_utils.c
 void	check_rectangle(t_game *game);
 
+// ft_itoa
+char	*ft_itoa(int n);
+
 //so_long_utils.c
 int		height(char *path);
 void	free_max(int fd, t_game *game);
 int		ft_strcmp(char *str, char *str2);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 // ff_utils.c
 int		void_next(t_game *game, int *count);
