@@ -18,7 +18,14 @@ SRC= 	src/parsing/parsing.c	src/parsing/print_error.c	src/utils/so_long_utils.c 
 		src/utils/gnl/get_next_line_utils.c			src/utils/gnl/get_next_line.c	  \
 		src/utils/ft_itoa.c		\
 
+SRCB= 	src/parsing/parsing.c	src/parsing/print_error.c	src/utils/so_long_utils.c \
+		src/so_long.c			src/utils/checkmap_utils_b.c	src/utils/ff_utils.c  \
+		src/utils/ff_utils2.c	src/utils/mlx_utils.c		src/utils/mlx_utils2.c	  \
+		src/utils/gnl/get_next_line_utils.c			src/utils/gnl/get_next_line.c	  \
+		src/utils/ft_itoa.c		\
+
 OFILES= ${SRC:%.c=obj/%.o}
+OFILESB= ${SRCB:%.c=obj/%.o}
 
 CC= 	cc
 CFLAGS= -Wall -Wextra -Werror -fsanitize=address -g3 -I includes
@@ -47,6 +54,17 @@ BAR =  ${shell expr 23 \* ${FICH_COUNT} / ${NBR_TOT_FICHIER}}
 REST = ${shell expr 23 - ${BAR}}
 
 all:	${NAME}
+
+bonus:			${OFILESB}
+		@${MAKE} -C ${MINILIBX} > /dev/null 2>&1
+		@${eval FICH_COUNT = ${shell expr ${FICH_COUNT} + 1}}
+		@file_name=MINILIBX && \
+		echo " ${GRAS}${RED}-> COMPILING${RESET}${GRAS}${GREEN}${RESET}" && \
+		printf " ${RED}${GRAS}[${GREEN}%-.${BAR}s${DARK_RED}%-.${REST}s${RED}] [%d/%d (%d%%)] ${GREEN}%s  ✓                         ${DEF_COLOR}" "-----------------------" "-----------------------" ${FICH_COUNT} ${NBR_TOT_FICHIER} ${NBR_COMPILER} $${file_name} && \
+		echo "${UP}${UP}${UP}" && \
+		echo ""
+		@${CC} ${CFLAGS} ${OFILESB} -L${MINILIBX} -lmlx -lX11 -lXext -lm -o ${NAME}
+		@echo "\n\n${GREEN} [✓] - ${_GREEN}so_long_bonus${GREEN} Successfully Compiled!${RESET}"
 
 ${NAME}:		${OFILES}
 		@${MAKE} -C ${MINILIBX} > /dev/null 2>&1
@@ -81,5 +99,7 @@ fclean:	clean
 	@echo "${RED}${ITALIQUE} -${NAME} is removed${RESET}"
 
 re:	fclean all
+
+re_b: fclean bonus
 
 .PHONY:		all bonus clean fclean re

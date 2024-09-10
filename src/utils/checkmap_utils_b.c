@@ -38,6 +38,7 @@ void	check_content2(int e, int p, t_game *game)
 	flood_fill(game);
 }
 
+// M = shot m = ball e = e move
 void	check_content(t_game *game)
 {
 	int	i;
@@ -56,7 +57,8 @@ void	check_content(t_game *game)
 			else if (game->map[i][j] == 'P')
 				p++;
 			else if (game->map[i][j] != '0' && game->map[i][j] != '1'
-				&& game->map[i][j] != 'C')
+				&& game->map[i][j] != 'C' && game->map[i][j] != 'M'
+				 && game->map[i][j] != 'm' && game->map[i][j] != 'e')
 				print_error(8, -1, game);
 		}
 		j = -1;

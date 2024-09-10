@@ -118,7 +118,7 @@ void	algo_ff(t_game *game);
 void	map_cpy(t_game *game);
 
 // ff_utils2.c
-int		exit_pos(t_game *game, int e, int i, int j);
+void		exit_pos(t_game *game, int i, int j);
 void	player_pos(t_game *game);
 
 // mlx_utils.c

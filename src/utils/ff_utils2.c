@@ -33,10 +33,14 @@ void	player_pos(t_game *game)
 	}
 }
 
-int	exit_pos(t_game *game, int e, int i, int j)
+void	exit_pos(t_game *game, int i, int j)
 {
-	e++;
+	static int	count;
+
+	count++;
+	if (count > 1)
+		print_error(6, -1, game);
 	game->ex = j;
 	game->ey = i;
-	return (e);
+	return ;
 }
