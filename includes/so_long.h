@@ -121,6 +121,9 @@ void	printus(char **arr);
 int		check(int argc, char **argv, t_game *game);
 void	flood_fill(t_game *game);
 
+// checkcontent.c
+void	check_content(t_game *game);
+
 //print_error.c
 void	print_error(int n, int fd, t_game *game);
 

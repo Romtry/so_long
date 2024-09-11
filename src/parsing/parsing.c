@@ -61,3 +61,35 @@ int	check(int argc, char **argv, t_game *game)
 		game->map = check_map(fd, argv[1], game);
 	return (fd);
 }
+
+void	check_walls(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	while (game->map[0][++i])
+	{
+		if (game->map[0][i] != '1' || game->map[game->height - 1][i] != '1')
+			print_error(5, -1, game);
+	}
+	i = -1;
+	while (game->map[++i + 1] != NULL)
+	{
+		if (game->map[i][0] != '1' || game->map[i][game->width - 1] != '1')
+			print_error(5, -1, game);
+	}
+	check_content(game);
+}
+
+void	check_rectangle(t_game *game)
+{
+	game->height = -1;
+	game->width = 0;
+	game->width = ft_strlen(game->map[0]);
+	while (game->map[++game->height] != NULL)
+	{
+		if (game->width != ft_strlen(game->map[game->height]))
+			print_error(4, -1, game);
+	}
+	check_walls(game);
+}
