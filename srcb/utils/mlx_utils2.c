@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-int	game_end(t_game *game, int i)
+int	game_end(t_game *game)
 {
 	mlx_destroy_image(game->aff.mlx, game->img.p);
 	mlx_destroy_image(game->aff.mlx, game->img.pl);
@@ -27,6 +27,16 @@ int	game_end(t_game *game, int i)
 	mlx_destroy_image(game->aff.mlx, game->img.exit);
 	mlx_destroy_image(game->aff.mlx, game->img.exit2);
 	mlx_destroy_image(game->aff.mlx, game->img.floor);
+	mlx_destroy_image(game->aff.mlx, game->img.dp);
+	mlx_destroy_image(game->aff.mlx, game->img.go);
+	mlx_destroy_image(game->aff.mlx, game->img.t);
+	mlx_destroy_image(game->aff.mlx, game->img.tl);
+	mlx_destroy_image(game->aff.mlx, game->img.td);
+	mlx_destroy_image(game->aff.mlx, game->img.tr);
+	mlx_destroy_image(game->aff.mlx, game->img.te);
+	mlx_destroy_image(game->aff.mlx, game->img.tel);
+	mlx_destroy_image(game->aff.mlx, game->img.ted);
+	mlx_destroy_image(game->aff.mlx, game->img.ter);
 	mlx_clear_window(game->aff.mlx, game->aff.mlx_win);
 	mlx_destroy_window(game->aff.mlx, game->aff.mlx_win);
 	if (game->str)
@@ -34,11 +44,13 @@ int	game_end(t_game *game, int i)
 		free(game->str);
 		free(game->shdw);
 	}
-	free_max(-1, game);
-	if (i == 0)
+	if (game->ret == 0)
 		write(1, "GAME CLOSE\n", 11);
+	else if (game->ret == 1)
+		write(1, "GAME LOSE, GET BETTER !\n", 24);
 	else
 		write(1, "WIN !\n", 6);
+	free_max(-1, game);
 	exit (0);
 }
 
@@ -60,6 +72,16 @@ void	init_imgs(t_game *game)
 	game->img.exit2 = mlx_xpm_file_to_image(game->aff.mlx, EXIT2, &i, &i);
 	game->img.exit = mlx_xpm_file_to_image(game->aff.mlx, EXIT, &i, &i);
 	game->img.wall = mlx_xpm_file_to_image(game->aff.mlx, WALL, &i, &i);
+	game->img.dp = mlx_xpm_file_to_image(game->aff.mlx, DP, &i, &i);
+	game->img.go = mlx_xpm_file_to_image(game->aff.mlx, GO, &i, &i);
+	game->img.t = mlx_xpm_file_to_image(game->aff.mlx, T, &i, &i);
+	game->img.tl = mlx_xpm_file_to_image(game->aff.mlx, TL, &i, &i);
+	game->img.td = mlx_xpm_file_to_image(game->aff.mlx, TD, &i, &i);
+	game->img.tr = mlx_xpm_file_to_image(game->aff.mlx, TR, &i, &i);
+	game->img.te = mlx_xpm_file_to_image(game->aff.mlx, TE, &i, &i);
+	game->img.tel = mlx_xpm_file_to_image(game->aff.mlx, TEL, &i, &i);
+	game->img.ted = mlx_xpm_file_to_image(game->aff.mlx, TED, &i, &i);
+	game->img.ter = mlx_xpm_file_to_image(game->aff.mlx, TER, &i, &i);
 }
 
 void	put_imgs(t_game *game, int y, int x, char c)
@@ -74,6 +96,8 @@ void	put_imgs(t_game *game, int y, int x, char c)
 		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->img.exit, x, y);
 	else if (c == 'P')
 		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->img.p, x, y);
+	else if (c == 'T')
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win, game->img.t, x, y);
 }
 
 void	mlx_draw(t_game *game)

@@ -31,6 +31,7 @@
 # define FLOOR "./assets/floor.xpm"
 # define EXIT "./assets/trap.xpm"
 # define EXIT2 "./assets/trappopened.xpm"
+# define GO "./assets/go.xpm"
 # define P "./assets/link.xpm"
 # define PL "./assets/link_left.xpm"
 # define PB "./assets/link_back.xpm"
@@ -39,6 +40,15 @@
 # define EPL "./assets/trap_link_left.xpm"
 # define EPB "./assets/trap_link_back.xpm"
 # define EPR "./assets/trap_link_right.xpm"
+# define DP "./assets/tomb.xpm"
+# define T "./assets/bow_wa.xpm"
+# define TL "./assets/bow_wa_l.xpm"
+# define TR "./assets/bow_wa_r.xpm"
+# define TD "./assets/bow_wa_d.xpm"
+# define TE "./assets/bow_empty.xpm"
+# define TEL "./assets/bow_empty_l.xpm"
+# define TER "./assets/bow_empty_r.xpm"
+# define TED "./assets/bow_empty_d.xpm"
 
 struct s_img
 {
@@ -50,11 +60,21 @@ struct s_img
 	void	*epl;
 	void	*ept;
 	void	*epr;
+	void	*dp;
+	void	*go;
 	void	*wall;
 	void	*floor;
 	void	*exit;
 	void	*exit2;
 	void	*coin;
+	void	*t;
+	void	*tl;
+	void	*td;
+	void	*tr;
+	void	*te;
+	void	*tel;
+	void	*ted;
+	void	*ter;
 };
 
 struct s_aff
@@ -70,6 +90,9 @@ struct s_aff
 
 typedef struct s_game
 {
+	int				pc;
+	int				tc;
+	int				bc;
 	int				ex;
 	int				ey;
 	int				x;
@@ -78,6 +101,8 @@ typedef struct s_game
 	int				py;
 	int				coin;
 	int				moves;
+	int				ret;
+	int				alive;
 	size_t			height;
 	size_t			width;
 	char			*str;
@@ -124,7 +149,7 @@ void	player_pos(t_game *game);
 // mlx_utils.c
 void	mlx_aff(t_game *game);
 void	mlx_draw(t_game *game);
-int		game_end(t_game *game, int i);
+int		game_end(t_game *game);
 void	init_imgs(t_game *game);
 void	put_imgs(t_game *game, int y, int x, char c);
 

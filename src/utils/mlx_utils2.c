@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-int	game_end(t_game *game, int i)
+int	game_end(t_game *game)
 {
 	mlx_destroy_image(game->aff.mlx, game->img.p);
 	mlx_destroy_image(game->aff.mlx, game->img.pl);
@@ -34,11 +34,11 @@ int	game_end(t_game *game, int i)
 		free(game->str);
 		free(game->shdw);
 	}
-	free_max(-1, game);
-	if (i == 0)
+	if (game->ret == 0)
 		write(1, "GAME CLOSE\n", 11);
 	else
 		write(1, "WIN !\n", 6);
+	free_max(-1, game);
 	exit (0);
 }
 

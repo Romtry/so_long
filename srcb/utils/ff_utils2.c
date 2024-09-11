@@ -1,39 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   ff_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rothiery <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/01 09:54:50 by rothiery          #+#    #+#             */
-/*   Updated: 2024/08/12 14:27:26 by rothiery         ###   ########.fr       */
+/*   Created: 2024/08/08 11:00:13 by rothiery          #+#    #+#             */
+/*   Updated: 2024/08/08 11:00:17 by rothiery         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	main(int argc, char **argv)
-{
-	int		fd;
-	t_game	*game;
-
-	game = malloc(sizeof(t_game));
-	game->cpy = NULL;
-	game->pc = 0;
-	game->tc = 0;
-	game->coin = 0;
-	fd = check(argc, argv, game);
-	mlx_aff(game);
-	free_max(fd, game);
-	return (0);
-}
-
-void	printus(char **arr)
+void	player_pos(t_game *game)
 {
 	int	i;
+	int	j;
 
 	i = -1;
-	while (arr[++i])
-		printf("%s\n", arr[i]);
-	write(1, "\n", 1);
+	j = -1;
+	while (game->map[++i])
+	{
+		while (game->map[i][++j])
+		{
+			if (game->map[i][j] == 'P')
+			{
+				game->px = j;
+				game->py = i;
+			}
+		}
+		j = -1;
+	}
+}
+
+void	exit_pos(t_game *game, int i, int j)
+{
+	static int	count;
+
+	count++;
+	if (count > 1)
+		print_error(6, -1, game);
+	game->ex = j;
+	game->ey = i;
+	return ;
 }

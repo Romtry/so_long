@@ -20,8 +20,8 @@ int	main(int argc, char **argv)
 	game = malloc(sizeof(t_game));
 	game->cpy = NULL;
 	game->pc = 0;
-	game->tc = 0;
 	game->coin = 0;
+	game->tc = 0;
 	fd = check(argc, argv, game);
 	mlx_aff(game);
 	free_max(fd, game);

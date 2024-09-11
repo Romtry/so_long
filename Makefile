@@ -18,11 +18,11 @@ SRC= 	src/parsing/parsing.c	src/parsing/print_error.c	src/utils/so_long_utils.c 
 		src/utils/gnl/get_next_line_utils.c			src/utils/gnl/get_next_line.c	  \
 		src/utils/ft_itoa.c		\
 
-SRCB= 	src/parsing/parsing.c	src/parsing/print_error.c	src/utils/so_long_utils.c \
-		src/so_long.c			src/utils/checkmap_utils_b.c	src/utils/ff_utils.c  \
-		src/utils/ff_utils2.c	src/utils/mlx_utils.c		src/utils/mlx_utils2.c	  \
-		src/utils/gnl/get_next_line_utils.c			src/utils/gnl/get_next_line.c	  \
-		src/utils/ft_itoa.c		\
+SRCB= 	srcb/parsing/parsing.c	srcb/parsing/print_error.c	srcb/utils/so_long_utils.c \
+		srcb/so_long.c			srcb/utils/checkmap_utils.c	srcb/utils/ff_utils.c  \
+		srcb/utils/ff_utils2.c	srcb/utils/mlx_utils.c		srcb/utils/mlx_utils2.c  \
+		srcb/utils/gnl/get_next_line_utils.c			srcb/utils/gnl/get_next_line.c	  \
+		srcb/utils/ft_itoa.c		\
 
 OFILES= ${SRC:%.c=obj/%.o}
 OFILESB= ${SRCB:%.c=obj/%.o}

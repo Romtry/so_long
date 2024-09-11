@@ -57,8 +57,13 @@ void	coin_func(t_game *game)
 			game->img.exit2, game->ex * PIXEL, game->ey * PIXEL);
 }
 
-int	on_ex_f(t_game *game, int y, int x, char m)
+void	on_ex_f(t_game *game, int y, int x, char m)
 {
+	if (game->coin == 0)
+	{
+		game->ret = 2;
+		game_end(game);
+	}
 	put_imgs(game, game->py * PIXEL, game->px * PIXEL,
 		game->map[game->py][game->px]);
 	if (m == 'L')
@@ -75,48 +80,48 @@ int	on_ex_f(t_game *game, int y, int x, char m)
 			game->img.epr, x * PIXEL, y * PIXEL);
 	game->px = x;
 	game->py = y;
-	return (1);
 }
+
+// void	enemies(t_game *game)
+// {
+	
+// }
 
 void	moves(int x, int y, t_game *game, char m)
 {
-	static int	on_ex;
+	static char	p_on;
 
 	if (game->map[y][x] == '1')
 		return ;
-	if (on_ex == 1)
-	{
-		game->map[game->py][game->px] = 'E';
-		on_ex = 0;
-	}
-	else
+	if (p_on == 0 || p_on == 'C')
 		game->map[game->py][game->px] = '0';
-	if (game->map[y][x] == 'C')
+	else
+		game->map[game->py][game->px] = p_on;
+	if (game->map[y][x] == 'E')
+		on_ex_f(game, y, x, m);
+	else if (game->map[y][x] == 'C')
 		coin_func(game);
-	else if (game->map[y][x] == 'E')
-	{
-		on_ex = on_ex_f(game, y, x, m);
-		if (game->coin == 0)
-			game_end(game, 1);
-	}
-	if (game->map[y][x] == '0' || game->map[y][x] == 'C')
-		game->map[y][x] = 'P';
+	p_on = game->map[y][x];
 	if (game->map[y][x] != 'E')
 		after_move(game, y, x, m);
+	enemies(game);
 }
 
 int	key_func(int keycode, t_game *game)
 {
 	if (keycode == ESC)
-		game_end(game, 0);
-	else if (keycode == UP)
-		moves(game->px, game->py - 1, game, 'T');
-	else if (keycode == LEFT)
-		moves(game->px - 1, game->py, game, 'L');
-	else if (keycode == DOWN)
-		moves(game->px, game->py + 1, game, 'D');
-	else if (keycode == RIGHT)
-		moves(game->px + 1, game->py, game, 'R');
+		game_end(game);
+	if (game->alive == 0)
+	{
+		if (keycode == UP)
+			moves(game->px, game->py - 1, game, 'T');
+		else if (keycode == LEFT)
+			moves(game->px - 1, game->py, game, 'L');
+		else if (keycode == DOWN)
+			moves(game->px, game->py + 1, game, 'D');
+		else if (keycode == RIGHT)
+			moves(game->px + 1, game->py, game, 'R');
+	}
 	return (0);
 }
 
@@ -128,6 +133,7 @@ void	mlx_aff(t_game *game)
 	game->aff.mlx_win = mlx_new_window(game->aff.mlx, game->width * PIXEL,
 			game->height * PIXEL, "So_long");
 	init_imgs(game);
+	game->alive = 0;
 	game->str = NULL;
 	game->shdw = NULL;
 	game->moves = 0;
