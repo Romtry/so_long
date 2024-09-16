@@ -48,30 +48,6 @@ int	ft_strcmp(char *str, char *str2)
 	return (0);
 }
 
-void	free_max(int fd, t_game *game)
-{
-	int	i;
-
-	i = -1;
-	if (fd != -1)
-		close(fd);
-	if (game && game->map != NULL )
-	{
-		while (game->map[++i] != NULL)
-			free(game->map[i]);
-		free(game->map);
-	}
-	i = -1;
-	if (game != NULL && game->cpy)
-	{
-		while (game->cpy[++i] != NULL)
-			free(game->cpy[i]);
-		free(game->cpy);
-	}
-	if (game)
-		free(game);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*dest;

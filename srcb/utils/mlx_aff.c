@@ -12,23 +12,68 @@
 
 #include "so_long.h"
 
+void	death(t_game *game, int y, int x, int t)
+{
+	game->ret = 1;
+	mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+		game->img.dp, game->px * PIXEL, game->py * PIXEL);
+	if (game->t_pos[t][2] == 0)
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.te, x * PIXEL, y * PIXEL);
+	else if (game->t_pos[t][2] == 1)
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.ter, x * PIXEL, y * PIXEL);
+	else if (game->t_pos[t][2] == 2)
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.ted, x * PIXEL, y * PIXEL);
+	else if (game->t_pos[t][2] == 3)
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.tel, x * PIXEL, y * PIXEL);
+	mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+		game->img.go, game->width / 2 * PIXEL, game->height / 2 * PIXEL);
+}
+
+void	put_turret(t_game *game, int y, int x)
+{
+	int	t;
+
+	t = 0;
+	mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+		game->img.te, x * PIXEL, y * PIXEL);
+	while (game->t_pos[t][0] != y || game->t_pos[t][1] != x)
+	{
+		t++;
+		if (t == game->tc)
+		{
+			write(1, "error\n", 5);
+			exit(1);
+		}
+	}
+	game->t_pos[t][2] = 4;
+}
+
 void	put_imgs(t_game *game, int y, int x, char c)
 {
 	if (c == '1')
 		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
-			game->img.wall, x, y);
+			game->img.wall, x * PIXEL, y * PIXEL);
 	else if (c == 'C')
 		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
-			game->img.coin, x, y);
+			game->img.coin, x * PIXEL, y * PIXEL);
 	else if (c == '0')
 		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
-			game->img.floor, x, y);
+			game->img.floor, x * PIXEL, y * PIXEL);
 	else if (c == 'E')
 		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
-			game->img.exit, x, y);
+			game->img.exit, x * PIXEL, y * PIXEL);
 	else if (c == 'P')
 		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
-			game->img.p, x, y);
+			game->img.p, x * PIXEL, y * PIXEL);
+	else if (c == 'T' && game->t_pos[game->tc][0] == 0)
+		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+			game->img.t, x * PIXEL, y * PIXEL);
+	else
+		put_turret(game, y, x);
 }
 
 void	print_moves(t_game *game)
@@ -40,44 +85,6 @@ void	print_moves(t_game *game)
 		game->shdw);
 }
 
-void	init_imgs(t_game *game)
-{
-	int	i;
-
-	i = PIXEL;
-	game->img.p = mlx_xpm_file_to_image(game->aff.mlx, P, &i, &i);
-	game->img.pl = mlx_xpm_file_to_image(game->aff.mlx, PL, &i, &i);
-	game->img.pt = mlx_xpm_file_to_image(game->aff.mlx, PB, &i, &i);
-	game->img.pr = mlx_xpm_file_to_image(game->aff.mlx, PR, &i, &i);
-	game->img.ep = mlx_xpm_file_to_image(game->aff.mlx, EP, &i, &i);
-	game->img.epl = mlx_xpm_file_to_image(game->aff.mlx, EPL, &i, &i);
-	game->img.ept = mlx_xpm_file_to_image(game->aff.mlx, EPB, &i, &i);
-	game->img.epr = mlx_xpm_file_to_image(game->aff.mlx, EPR, &i, &i);
-	game->img.coin = mlx_xpm_file_to_image(game->aff.mlx, COIN, &i, &i);
-	game->img.floor = mlx_xpm_file_to_image(game->aff.mlx, FLOOR, &i, &i);
-	game->img.exit2 = mlx_xpm_file_to_image(game->aff.mlx, EXIT2, &i, &i);
-	game->img.exit = mlx_xpm_file_to_image(game->aff.mlx, EXIT, &i, &i);
-	game->img.wall = mlx_xpm_file_to_image(game->aff.mlx, WALL, &i, &i);
-}
-
-void	mlx_draw(t_game *game)
-{
-	int		x;
-	int		y;
-
-	x = -1;
-	y = -1;
-	while (game->map[++y] != NULL)
-	{
-		while (game->map[y][++x])
-			put_imgs(game, y * PIXEL, x * PIXEL, game->map[y][x]);
-		x = -1;
-	}
-	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 11, 11, 0, "MOVES = 0");
-	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 10, 10, 0xFFFFFF,
-		"MOVES = 0");
-}
-
 void	mlx_aff(t_game *game)
 {
 	game->aff.mlx = mlx_init();
@@ -87,8 +94,6 @@ void	mlx_aff(t_game *game)
 			game->height * PIXEL, "So_long");
 	init_imgs(game);
 	game->ret = 0;
-	game->str = NULL;
-	game->shdw = NULL;
 	game->moves = 0;
 	mlx_draw(game);
 	mlx_hook(game->aff.mlx_win, 2, 1L << 0, key_func, game);

@@ -29,8 +29,6 @@ void	content_count(t_game *game, char c, int y, int x)
 		game->coin++;
 	else if (c == 'P')
 		game->pc++;
-	else if (c == 'T')
-		game->tc++;
 }
 
 void	check_content(t_game *game)
@@ -53,4 +51,30 @@ void	check_content(t_game *game)
 		x = -1;
 	}
 	check_count(game);
+}
+
+void	check_walls(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	while (game->map[0][++i])
+	{
+		if (game->map[0][i] != '1' || game->map[game->height - 1][i] != '1')
+			print_error(5, -1, game);
+	}
+	i = -1;
+	while (game->map[++i + 1] != NULL)
+	{
+		if (game->map[i][0] != '1' || game->map[i][game->width - 1] != '1')
+			print_error(5, -1, game);
+	}
+	check_content(game);
+}
+
+void	flood_fill(t_game *game)
+{
+	map_cpy(game);
+	player_pos(game);
+	algo_ff(game);
 }
