@@ -41,15 +41,16 @@ void	printus(char **arr)
 	write(1, "\n", 1);
 }
 
-void	turret_stat(t_game *game)
-{
-	int	i;
+// void	turret_stat(t_game *game)
+// {
+// 	int	i;
 
-	i = -1;
-	printf("%d\n", game->tc);
-	while (++i < game->tc)
-	{
-		printf("turret %d : y %d x %d dir %d\n", i, game->t_pos[i][0], game->t_pos[i][1], game->t_pos[i][2]);
-	}
-	printf("%d", game->t_pos[game->tc][0]);
-}
+// 	i = -1;
+// 	printf("%d\n", game->tc);
+// 	while (++i < game->tc)
+// 	{
+// 		printf("turret %d : y %d x %d dir %d\n", i, game->t_pos[i][0],
+// 			game->t_pos[i][1], game->t_pos[i][2]);
+// 	}
+// 	printf("%d", game->t_pos[game->tc][0]);
+// }

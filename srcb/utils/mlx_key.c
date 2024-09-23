@@ -58,16 +58,18 @@ void	after_move(t_game *game, int y, int x, char m)
 	else if (m == 'R')
 		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 			game->img.pr, x * PIXEL, y * PIXEL);
-	put_imgs(game, game->py, game->px, game->map[game->py][game->px]);
-	game->px = x;
-	game->py = y;
-	game->map[y][x] = 'P';
-	game->moves++;
+	if (game->map[game->py][game->px] == 'T')
+		put_turret(game, game->py, game->px);
+	else
+		put_imgs(game, game->py, game->px, game->map[game->py][game->px]);
+	actu_p(game, y, x);
 	if (game->str)
 	{
 		free(game->str);
 		free(game->shdw);
 	}
+	mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
+		game->img.wall, 1 * PIXEL, 0);
 	print_moves(game);
 }
 
@@ -93,7 +95,8 @@ void	moves(int x, int y, t_game *game, char m)
 	p_on = game->map[y][x];
 	if (game->map[y][x] != 'E')
 		after_move(game, y, x, m);
-	turret(game);
+	if (game->t_pos)
+		turret(game);
 }
 
 int	key_func(int keycode, t_game *game)
@@ -109,6 +112,14 @@ int	key_func(int keycode, t_game *game)
 		else if (keycode == DOWN)
 			moves(game->px, game->py + 1, game, 'D');
 		else if (keycode == RIGHT)
+			moves(game->px + 1, game->py, game, 'R');
+		else if (keycode == W)
+			moves(game->px, game->py - 1, game, 'T');
+		else if (keycode == A)
+			moves(game->px - 1, game->py, game, 'L');
+		else if (keycode == S)
+			moves(game->px, game->py + 1, game, 'D');
+		else if (keycode == D)
 			moves(game->px + 1, game->py, game, 'R');
 	}
 	return (0);

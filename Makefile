@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 NAME=	so_long
+NAMEB=	so_long_bonus
 
 SRC= 	src/so_long.c			src/parsing/parsing.c		src/parsing/checkcontent.c	\
 		src/utils/end_game.c	src/utils/ff_algo.c			src/utils/ff_utils.c		\
@@ -30,8 +31,6 @@ OFILESB= ${SRCB:%.c=obj/%.o}
 
 CC= 	cc
 CFLAGS= -Wall -Wextra -Werror -fsanitize=address -g3 -I includes
-
-MINILIBX= includes/.mlx
 
 RESET = \033[0m
 GRAS = \033[1m
@@ -59,27 +58,29 @@ REST = ${shell expr 23 - ${BAR}}
 
 all:	${NAME}
 
-bonus:			${OFILESB}
-		@${MAKE} -C ${MINILIBX} > /dev/null 2>&1
-		@${eval FICH_COUNT = ${shell expr ${FICH_COUNT} + 1}}
-		@file_name=MINILIBX && \
-		echo " ${GRAS}${RED}-> COMPILING${RESET}${GRAS}${GREEN}${RESET}" && \
-		printf " ${RED}${GRAS}[${GREEN}%-.${BAR}s${DARK_RED}%-.${REST}s${RED}] [%d/%d (%d%%)] ${GREEN}%s  ✓                         ${DEF_COLOR}" "-----------------------" "-----------------------" ${FICH_COUNT} ${NBR_TOT_FICHIER} ${NBR_COMPILER} $${file_name} && \
-		echo "${UP}${UP}${UP}" && \
-		echo ""
-		@${CC} ${CFLAGS} ${OFILESB} -L${MINILIBX} -lmlx -lX11 -lXext -lm -o ${NAME}
-		@echo "\n\n${GREEN} [✓] - ${_GREEN}so_long_bonus${GREEN} Successfully Compiled!${RESET}"
+bonus:	${NAMEB}
+
+${NAMEB}:			${OFILESB}
+	@${MAKE} -C ${MINILIBX} > /dev/null 2>&1
+	@${eval FICH_COUNT = ${shell expr ${FICH_COUNT} + 1}}
+	@file_name=MINILIBX && \
+	echo " ${GRAS}${RED}-> COMPILING${RESET}${GRAS}${GREEN}${RESET}" && \
+	printf " ${RED}${GRAS}[${GREEN}%-.${BAR}s${DARK_RED}%-.${REST}s${RED}] [%d/%d (%d%%)] ${GREEN}%s  ✓                         ${DEF_COLOR}" "-----------------------" "-----------------------" ${FICH_COUNT} ${NBR_TOT_FICHIER} ${NBR_COMPILER} $${file_name} && \
+	echo "${UP}${UP}${UP}" && \
+	echo ""
+	@${CC} ${CFLAGS} ${OFILESB} -L${MINILIBX} -lmlx -lX11 -lXext -lm -o ${NAMEB}
+	@echo "\n\n${GREEN} [✓] - ${_GREEN}so_long_bonus${GREEN} Successfully Compiled!${RESET}"
 
 ${NAME}:		${OFILES}
-		@${MAKE} -C ${MINILIBX} > /dev/null 2>&1
-		@${eval FICH_COUNT = ${shell expr ${FICH_COUNT} + 1}}
-		@file_name=MINILIBX && \
-		echo " ${GRAS}${RED}-> COMPILING${RESET}${GRAS}${GREEN}${RESET}" && \
-		printf " ${RED}${GRAS}[${GREEN}%-.${BAR}s${DARK_RED}%-.${REST}s${RED}] [%d/%d (%d%%)] ${GREEN}%s  ✓                         ${DEF_COLOR}" "-----------------------" "-----------------------" ${FICH_COUNT} ${NBR_TOT_FICHIER} ${NBR_COMPILER} $${file_name} && \
-		echo "${UP}${UP}${UP}" && \
-		echo ""
-		@${CC} ${CFLAGS} ${OFILES} -L${MINILIBX} -lmlx -lX11 -lXext -lm -o ${NAME}
-		@echo "\n\n${GREEN} [✓] - ${_GREEN}so_long${GREEN} Successfully Compiled!${RESET}"
+	@${MAKE} -C ${MINILIBX} > /dev/null 2>&1
+	@${eval FICH_COUNT = ${shell expr ${FICH_COUNT} + 1}}
+	@file_name=MINILIBX && \
+	echo " ${GRAS}${RED}-> COMPILING${RESET}${GRAS}${GREEN}${RESET}" && \
+	printf " ${RED}${GRAS}[${GREEN}%-.${BAR}s${DARK_RED}%-.${REST}s${RED}] [%d/%d (%d%%)] ${GREEN}%s  ✓                         ${DEF_COLOR}" "-----------------------" "-----------------------" ${FICH_COUNT} ${NBR_TOT_FICHIER} ${NBR_COMPILER} $${file_name} && \
+	echo "${UP}${UP}${UP}" && \
+	echo ""
+	@${CC} ${CFLAGS} ${OFILES} -L${MINILIBX} -lmlx -lX11 -lXext -lm -o ${NAME}
+	@echo "\n\n${GREEN} [✓] - ${_GREEN}so_long${GREEN} Successfully Compiled!${RESET}"
 
 obj/%.o:%.c
 	@mkdir -p obj/$(dir $<)
@@ -99,6 +100,7 @@ clean:
 
 fclean:	clean
 	@rm -f ${NAME}
+	@rm -f ${NAMEB}
 	@${RM} ${NAME}
 	@echo "${RED}${ITALIQUE} -${NAME} is removed${RESET}"
 

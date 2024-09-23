@@ -33,11 +33,19 @@ void	put_imgs(t_game *game, int y, int x, char c)
 
 void	print_moves(t_game *game)
 {
-	game->str = ft_strjoin("MOVES = ", ft_itoa(game->moves));
-	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 11, 11, 0, game->str);
-	game->shdw = ft_strjoin("MOVES = ", ft_itoa(game->moves));
-	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 10, 10, 0xFFFFFF,
-		game->shdw);
+	char	*m;
+	int		i;
+
+	i = 0;
+	write(1, "MOVES = ", 9);
+	m = ft_itoa(game->moves);
+	while (i < (int)ft_strlen(m))
+	{
+		write(1, &m[i], 1);
+		i++;
+	}
+	write(1, "\n", 1);
+	free(m);
 }
 
 void	init_imgs(t_game *game)
@@ -73,9 +81,6 @@ void	mlx_draw(t_game *game)
 			put_imgs(game, y * PIXEL, x * PIXEL, game->map[y][x]);
 		x = -1;
 	}
-	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 11, 11, 0, "MOVES = 0");
-	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 10, 10, 0xFFFFFF,
-		"MOVES = 0");
 }
 
 void	mlx_aff(t_game *game)

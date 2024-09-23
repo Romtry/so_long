@@ -39,16 +39,16 @@ void	turret_movesl(t_game *game, int t, int dir)
 			print_turret(game, t, 1);
 		else if (game->map[game->t_pos[t][0] + 1][game->t_pos[t][1]] != '1')
 			print_turret(game, t, 2);
-		else if (game->t_pos[game->tc][0] % 2 == 0)
+		else if (game->t_pos[t][3] == 1)
 		{
-			game->t_pos[t][3] = 1;
+			game->t_pos[t][3] = 0;
 			mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 				game->img.tel, game->t_pos[t][1] * PIXEL,
 				game->t_pos[t][0] * PIXEL);
 		}
 		else
 		{
-			game->t_pos[t][3] = 0;
+			game->t_pos[t][3] = 1;
 			mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 				game->img.tl, game->t_pos[t][1] * PIXEL,
 				game->t_pos[t][0] * PIXEL);
@@ -66,16 +66,16 @@ void	turret_movesd(t_game *game, int t, int dir)
 			print_turret(game, t, 0);
 		else if (game->map[game->t_pos[t][0]][game->t_pos[t][1] + 1] != '1')
 			print_turret(game, t, 1);
-		else if (game->t_pos[game->tc][0] % 2 == 0)
+		else if (game->t_pos[t][3] == 1)
 		{
-			game->t_pos[t][3] = 1;
+			game->t_pos[t][3] = 0;
 			mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 				game->img.ted, game->t_pos[t][1] * PIXEL,
 				game->t_pos[t][0] * PIXEL);
 		}
 		else
 		{
-			game->t_pos[t][3] = 0;
+			game->t_pos[t][3] = 1;
 			mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 				game->img.td, game->t_pos[t][1] * PIXEL,
 				game->t_pos[t][0] * PIXEL);
@@ -95,16 +95,16 @@ void	turret_movesr(t_game *game, int t, int dir)
 			print_turret(game, t, 3);
 		else if (game->map[game->t_pos[t][0] - 1][game->t_pos[t][1]] != '1')
 			print_turret(game, t, 0);
-		else if (game->t_pos[game->tc][0] % 2 == 0)
+		else if (game->t_pos[t][3] == 1)
 		{
-			game->t_pos[t][3] = 1;
+			game->t_pos[t][3] = 0;
 			mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 				game->img.ter, game->t_pos[t][1] * PIXEL,
 				game->t_pos[t][0] * PIXEL);
 		}
 		else
 		{
-			game->t_pos[t][3] = 0;
+			game->t_pos[t][3] = 1;
 			mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 				game->img.tr, game->t_pos[t][1] * PIXEL,
 				game->t_pos[t][0] * PIXEL);
@@ -124,16 +124,16 @@ void	turret_moves(t_game *game, int t, int dir)
 			print_turret(game, t, 2);
 		else if (game->map[game->t_pos[t][0]][game->t_pos[t][1] - 1] != '1')
 			print_turret(game, t, 3);
-		else if (game->t_pos[game->tc][0] % 2 == 0)
+		else if (game->t_pos[t][3] == 0)
 		{
-			game->t_pos[t][3] = 1;
+			game->t_pos[t][3] = 0;
 			mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 				game->img.te, game->t_pos[t][1] * PIXEL,
 				game->t_pos[t][0] * PIXEL);
 		}
 		else
 		{
-			game->t_pos[t][3] = 0;
+			game->t_pos[t][3] = 1;
 			mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 				game->img.t, game->t_pos[t][1] * PIXEL,
 				game->t_pos[t][0] * PIXEL);

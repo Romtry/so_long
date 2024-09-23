@@ -35,14 +35,14 @@ void	check_rectangle(t_game *game)
 	game->height = -1;
 	game->width = 0;
 	game->width = ft_strlen(game->map[0]);
-	if (game->width > 54)
+	if (game->width > 41)
 		print_error(11, -1, game);
 	while (game->map[++game->height] != NULL)
 	{
 		if (game->width != ft_strlen(game->map[game->height]))
 			print_error(4, -1, game);
 	}
-	if (game->height > 30)
+	if (game->height > 22)
 		print_error(11, -1, game);
 	check_walls(game);
 }

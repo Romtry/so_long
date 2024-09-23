@@ -65,6 +65,8 @@ void	mlx_draw(t_game *game)
 			put_imgs(game, y, x, game->map[y][x]);
 		x = -1;
 	}
+	aff_turret(game, 1);
+	aff_turret(game, 1);
 	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 11, 11, 0, "MOVES = 0");
 	mlx_string_put(game->aff.mlx, game->aff.mlx_win, 10, 10, 0xFFFFFF,
 		"MOVES = 0");

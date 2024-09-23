@@ -69,11 +69,6 @@ void	put_imgs(t_game *game, int y, int x, char c)
 	else if (c == 'P')
 		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
 			game->img.p, x * PIXEL, y * PIXEL);
-	else if (c == 'T' && game->t_pos[game->tc][0] == 0)
-		mlx_put_image_to_window(game->aff.mlx, game->aff.mlx_win,
-			game->img.t, x * PIXEL, y * PIXEL);
-	else
-		put_turret(game, y, x);
 }
 
 void	print_moves(t_game *game)

@@ -105,5 +105,13 @@ int	key_func(int keycode, t_game *game)
 		moves(game->px, game->py + 1, game, 'D');
 	else if (keycode == RIGHT)
 		moves(game->px + 1, game->py, game, 'R');
+	else if (keycode == W)
+		moves(game->px, game->py - 1, game, 'T');
+	else if (keycode == A)
+		moves(game->px - 1, game->py, game, 'L');
+	else if (keycode == S)
+		moves(game->px, game->py + 1, game, 'D');
+	else if (keycode == D)
+		moves(game->px + 1, game->py, game, 'R');
 	return (0);
 }

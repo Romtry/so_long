@@ -38,7 +38,7 @@ void	turret_pos(t_game *game)
 				game->t_pos[i][0] = y;
 				game->t_pos[i][1] = x;
 				game->t_pos[i][2] = 0;
-				game->t_pos[i][3] = 0;
+				game->t_pos[i][3] = 1;
 			}
 		}
 		x = -1;

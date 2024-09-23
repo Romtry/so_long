@@ -73,3 +73,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	free((char *)s2);
 	return (dest);
 }
+
+void	actu_p(t_game *game, int y, int x)
+{
+	game->px = x;
+	game->py = y;
+	game->map[y][x] = 'P';
+	game->moves++;
+}

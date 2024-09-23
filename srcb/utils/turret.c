@@ -71,18 +71,18 @@ void	turret_shot(t_game *game)
 	t = -1;
 	while (++t < game->tc)
 	{
-		if (game->t_pos[t][3] == 0)
+		if (game->t_pos[t][3] == 1)
 			no_wall(game, game->t_pos[t][2], t);
 	}
 }
 
-void	aff_turret(t_game *game)
+void	aff_turret(t_game *game, int n)
 {
 	static int	i;
 	int			t;
 
 	t = -1;
-	if (i != game->t_pos[game->tc][0])
+	if (game->t_pos && (i != game->t_pos[game->tc][0] || n == 1))
 	{
 		while (++t < game->tc)
 		{
@@ -98,11 +98,11 @@ void	turret(t_game *game)
 	static int		count;
 
 	count++;
-	if (count == 5)
+	if (count >= 5)
 	{
 		game->t_pos[game->tc][0] = game->t_pos[game->tc][0] + 1;
 		count = 0;
 	}
-	aff_turret(game);
+	aff_turret(game, 0);
 	turret_shot(game);
 }
