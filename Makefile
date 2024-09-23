@@ -32,6 +32,8 @@ OFILESB= ${SRCB:%.c=obj/%.o}
 CC= 	cc
 CFLAGS= -Wall -Wextra -Werror -fsanitize=address -g3 -I includes
 
+MINILIBX = includes/.mlx
+
 RESET = \033[0m
 GRAS = \033[1m
 ITALIQUE = \033[3m
